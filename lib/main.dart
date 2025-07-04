@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'Dashboard.dart';
+import 'RiceStock.dart';
 
 void main() {
   runApp(RiceTraxApp());
