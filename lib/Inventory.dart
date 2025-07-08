@@ -84,41 +84,19 @@ class Inventory extends StatelessWidget {
       body: ListView(
         padding: EdgeInsets.all(16),
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Inventory',
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
+          Center(
+            child: Text(
+              'Inventory',
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
               ),
-              Row(
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.add_circle, color: Colors.green[800]),
-                    onPressed: () {
-                      // TODO: Implement add brand functionality
-                      print("Add brand tapped");
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.delete, color: Colors.red[700]),
-                    onPressed: () {
-                      // TODO: Implement delete brand functionality
-                      print("Delete brand tapped");
-                    },
-                  ),
-                ],
-              ),
-            ],
+            ),
           ),
           SizedBox(height: 16),
           ...items.map((item) => _buildInventoryCard(item['name'], item['sacks'])).toList(),
           SizedBox(height: 24),
-         
         ],
       ),
     );
@@ -163,6 +141,7 @@ class Inventory extends StatelessWidget {
         ],
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             padding: EdgeInsets.all(12),
@@ -203,6 +182,24 @@ class Inventory extends StatelessWidget {
                 ),
               ],
             ),
+          ),
+          Column(
+            children: [
+              IconButton(
+                icon: Icon(Icons.edit, color: const Color.fromARGB(255, 0, 0, 0)),
+                onPressed: () {
+                  print('Edit tapped for $title');
+                  // TODO: Implement edit functionality
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.delete, color: const Color.fromARGB(255, 0, 0, 0)),
+                onPressed: () {
+                  print('Delete tapped for $title');
+                  // TODO: Implement delete functionality
+                },
+              ),
+            ],
           ),
         ],
       ),
