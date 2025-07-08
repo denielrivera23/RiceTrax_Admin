@@ -11,7 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  fl_chart: ^0.68.0
+  fl_chart: ^0.64.0
 
 dev_dependencies:
   flutter_test:
@@ -23,9 +23,3 @@ flutter:
   assets:
     - assets/rice_logo.jpg
     - assets/palay.jpg
-
-pubspec.yaml:
-  # This file is used to manage the dependencies and assets of the Flutter project.
-  # It includes the necessary packages for the RiceTrax dashboard and defines the assets used in the application.
-  # The versioning and environment constraints are also specified here.
-  # Ensure to run `flutter pub get` after making changes to this file to update dependencies.
