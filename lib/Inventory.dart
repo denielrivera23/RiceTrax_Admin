@@ -43,6 +43,37 @@ class _InventoryState extends State<Inventory> {
     return Icon(Icons.warehouse, color: Colors.green[800], size: 28);
   }
 
+  void _showDeleteConfirmation(BuildContext context, String brandName) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Confirm Deletion'),
+        content: Text('Are you sure you want to delete "$brandName"?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(), // cancel
+            child: Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              setState(() {
+                riceData.removeWhere((item) => item['name'] == brandName);
+              });
+              Navigator.of(context).pop(); // close the dialog
+              // Optionally, show a Snackbar for confirmation
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text('$brandName deleted successfully!'),
+                duration: Duration(seconds: 2),
+              ));
+            },
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            child: Text('Delete'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -129,26 +160,33 @@ class _InventoryState extends State<Inventory> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(item['name'], style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-SizedBox(height: 4),
-Text('${item['stock']} sacks', style: TextStyle(fontSize: 14)),
-SizedBox(height: 8), // Fixed height here
-Container(
-  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-  decoration: BoxDecoration(
-    color: getBadgeColor(status),
-    borderRadius: BorderRadius.circular(20),
-  ),
-  child: Text(
-    status,
-    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-  ),
-),
-
+                                  SizedBox(height: 4),
+                                  Text('${item['stock']} sacks', style: TextStyle(fontSize: 14)),
+                                  SizedBox(height: 8), // Fixed height here
+                                  Container(
+                                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                    decoration: BoxDecoration(
+                                      color: getBadgeColor(status),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: Text(
+                                      status,
+                                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
-                            IconButton(onPressed: () {}, icon: Icon(Icons.edit, color: Colors.grey)),
-                            IconButton(onPressed: () {}, icon: Icon(Icons.delete, color: Colors.grey)),
+                            IconButton(
+                              onPressed: () {}, 
+                              icon: Icon(Icons.edit, color: Colors.grey),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                _showDeleteConfirmation(context, item['name']);
+                              },
+                              icon: Icon(Icons.delete, color: Colors.grey),
+                            ),
                           ],
                         ),
                       ),
