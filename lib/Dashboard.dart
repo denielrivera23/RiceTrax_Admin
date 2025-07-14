@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+
 import 'RiceStock.dart';
 import 'Inventory.dart';
+import 'NotificationsPage.dart';
+import 'Supplier.dart';
+import 'Sales.dart';  
+import 'Settings.dart';
+
 
 class Dashboard extends StatefulWidget {
   @override
@@ -41,42 +47,30 @@ class _DashboardState extends State<Dashboard> {
                   ],
                 ),
               ),
-              _buildDrawerItem(
-                  icon: Icons.dashboard,
-                  title: 'Dashboard',
-                  context: context,
-                  onTap: () {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => Dashboard()));
-                  }),
-              _buildDrawerItem(
-                  icon: Icons.inventory,
-                  title: 'Rice Inventory Stock',
-                  context: context,
-                  onTap: () {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => RiceStock()));
-                  }),
-              _buildDrawerItem(
-                  icon: Icons.list_alt,
-                  title: 'Inventory',
-                  context: context,
-                  onTap: () {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => Inventory()));
-                  }),
-              _buildDrawerItem(
-                  icon: Icons.attach_money,
-                  title: 'Sales',
-                  context: context),
-              _buildDrawerItem(
-                  icon: Icons.notifications,
-                  title: 'Notifications',
-                  context: context),
-              _buildDrawerItem(
-                  icon: Icons.settings, title: 'Settings', context: context),
-              _buildDrawerItem(
-                  icon: Icons.logout, title: 'Logout', context: context),
+              _buildDrawerItem(icon: Icons.dashboard, title: 'Dashboard', context: context, onTap: () {
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Dashboard()));
+              }),
+              _buildDrawerItem(icon: Icons.inventory, title: 'Rice Inventory Stock', context: context, onTap: () {
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => RiceStock()));
+              }),
+              _buildDrawerItem(icon: Icons.list_alt, title: 'Inventory', context: context, onTap: () {
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Inventory()));
+              }),
+              _buildDrawerItem(icon: Icons.local_shipping, title: 'Supplier', context: context, onTap: () {
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Supplier()));
+              }),
+              _buildDrawerItem(icon: Icons.attach_money, title: 'Sales', context: context, onTap: () {
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Sales()));
+              }),
+              _buildDrawerItem(icon: Icons.notifications, title: 'Notification', context: context, onTap: () {
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => NotificationsPage()));
+              }),
+              _buildDrawerItem(icon: Icons.settings, title: 'Settings', context: context, onTap: () {
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Settings()));
+              }),
+              _buildDrawerItem(icon: Icons.logout, title: 'Logout', context: context, onTap: () {
+                Navigator.of(context).popUntil((route) => route.isFirst);
+              }),
             ],
           ),
         ),
@@ -84,8 +78,7 @@ class _DashboardState extends State<Dashboard> {
       appBar: AppBar(
         backgroundColor: Colors.green[800],
         title: Text('RiceTrax',
-            style:
-                TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
         leading: Builder(
           builder: (context) => IconButton(
             icon: Icon(Icons.menu, color: Colors.white),
@@ -102,75 +95,33 @@ class _DashboardState extends State<Dashboard> {
                   fontWeight: FontWeight.bold,
                   color: Colors.green[800])),
           SizedBox(height: 16),
-          _buildDashboardCard(
-              icon: Icons.attach_money,
-              title: 'Total Sales Today',
-              value: '₱ 15,400',
-              index: 0),
+          _buildDashboardCard(icon: Icons.attach_money, title: 'Total Sales Today', value: '₱ 15,400', index: 0),
           SizedBox(height: 16),
-          _buildDashboardCard(
-              icon: Icons.inventory_2,
-              title: 'Total Stock (sacks)',
-              value: '930',
-              index: 1),
+          _buildDashboardCard(icon: Icons.inventory_2, title: 'Total Stock (sacks)', value: '930', index: 1),
           SizedBox(height: 16),
-          _buildDashboardCard(
-              icon: Icons.shopping_cart,
-              title: 'Sold Stocks (sacks)',
-              value: '250',
-              index: 2),
+          _buildDashboardCard(icon: Icons.shopping_cart, title: 'Sold Stocks (sacks)', value: '250', index: 2),
           SizedBox(height: 16),
-          _buildDashboardCard(
-              icon: Icons.warning,
-              title: 'Low Stocks',
-              value: '1 item',
-              index: 3),
+          _buildDashboardCard(icon: Icons.warning, title: 'Low Stocks', value: '1 item', index: 3),
           SizedBox(height: 24),
           _buildSectionTitle('Inventory Breakdown (sacks)'),
           SizedBox(height: 200, child: _buildPieChart()),
           SizedBox(height: 24),
           _buildSectionTitle('Monthly Sales (₱)'),
           SizedBox(height: 200, child: _buildBarChart()),
-          SizedBox(height: 24),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => RiceStock())),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green[800],
-                padding: EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12)),
-              ),
-              child: Text('View Rice Inventory Stock',
-                  style: TextStyle(fontSize: 16, color: Colors.white)),
-            ),
-          ),
         ],
       ),
     );
   }
 
-  Widget _buildDrawerItem({
-    required IconData icon,
-    required String title,
-    required BuildContext context,
-    VoidCallback? onTap,
-  }) {
+  Widget _buildDrawerItem({required IconData icon, required String title, required BuildContext context, VoidCallback? onTap}) {
     return ListTile(
       leading: Icon(icon, color: Colors.white),
       title: Text(title, style: TextStyle(color: Colors.white, fontSize: 16)),
-      onTap: onTap ?? () {},
+      onTap: onTap,
     );
   }
 
-  Widget _buildDashboardCard({
-    required IconData icon,
-    required String title,
-    required String value,
-    required int index,
-  }) {
+  Widget _buildDashboardCard({required IconData icon, required String title, required String value, required int index}) {
     final isSelected = selectedCardIndex == index;
 
     return GestureDetector(
@@ -180,27 +131,15 @@ class _DashboardState extends State<Dashboard> {
         padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: isSelected ? Colors.green[50] : Colors.white,
-          border: Border.all(
-            color: isSelected ? Colors.green : Colors.transparent,
-            width: 2,
-          ),
+          border: Border.all(color: isSelected ? Colors.green : Colors.transparent, width: 2),
           borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 6,
-              offset: Offset(0, 2),
-            ),
-          ],
+          boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 2))],
         ),
         child: Row(
           children: [
             Container(
               padding: EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(12),
-              ),
+              decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.circular(12)),
               child: Icon(icon, color: Colors.green[800], size: 28),
             ),
             SizedBox(width: 16),
@@ -208,15 +147,9 @@ class _DashboardState extends State<Dashboard> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title,
-                      style:
-                          TextStyle(fontSize: 16, color: Colors.green[800])),
+                  Text(title, style: TextStyle(fontSize: 16, color: Colors.green[800])),
                   SizedBox(height: 8),
-                  Text(value,
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green[800])),
+                  Text(value, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.green[800])),
                 ],
               ),
             ),
@@ -227,11 +160,7 @@ class _DashboardState extends State<Dashboard> {
   }
 
   Widget _buildSectionTitle(String title) {
-    return Text(title,
-        style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: Colors.green[800]));
+    return Text(title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.green[800]));
   }
 
   Widget _buildPieChart() {
@@ -246,9 +175,7 @@ class _DashboardState extends State<Dashboard> {
         pieTouchData: PieTouchData(
           touchCallback: (event, response) {
             setState(() {
-              if (!event.isInterestedForInteractions ||
-                  response == null ||
-                  response.touchedSection == null) {
+              if (!event.isInterestedForInteractions || response == null || response.touchedSection == null) {
                 touchedIndex = -1;
               } else {
                 touchedIndex = response.touchedSection!.touchedSectionIndex;
@@ -284,8 +211,7 @@ class _DashboardState extends State<Dashboard> {
               reservedSize: 24,
               getTitlesWidget: (value, _) {
                 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May'];
-                return Text(months[value.toInt() % months.length],
-                    style: TextStyle(fontSize: 12, color: Colors.green[800]));
+                return Text(months[value.toInt() % months.length], style: TextStyle(fontSize: 12, color: Colors.green[800]));
               },
             ),
           ),
@@ -293,27 +219,16 @@ class _DashboardState extends State<Dashboard> {
             sideTitles: SideTitles(
               showTitles: true,
               reservedSize: 28,
-              getTitlesWidget: (value, _) => Text('${value.toInt()}',
-                  style: TextStyle(fontSize: 10, color: Colors.green[800])),
+              getTitlesWidget: (value, _) => Text('${value.toInt()}', style: TextStyle(fontSize: 10, color: Colors.green[800])),
             ),
           ),
         ),
         barGroups: [
-          BarChartGroupData(
-              x: 0,
-              barRods: [BarChartRodData(toY: 400, color: Colors.green[800])]),
-          BarChartGroupData(
-              x: 1,
-              barRods: [BarChartRodData(toY: 300, color: Colors.green[800])]),
-          BarChartGroupData(
-              x: 2,
-              barRods: [BarChartRodData(toY: 500, color: Colors.green[800])]),
-          BarChartGroupData(
-              x: 3,
-              barRods: [BarChartRodData(toY: 200, color: Colors.green[800])]),
-          BarChartGroupData(
-              x: 4,
-              barRods: [BarChartRodData(toY: 300, color: Colors.green[800])]),
+          BarChartGroupData(x: 0, barRods: [BarChartRodData(toY: 400, color: Colors.green[200])]),
+          BarChartGroupData(x: 1, barRods: [BarChartRodData(toY: 300, color: Colors.green[200])]),
+          BarChartGroupData(x: 2, barRods: [BarChartRodData(toY: 500, color: Colors.green[200])]),
+          BarChartGroupData(x: 3, barRods: [BarChartRodData(toY: 200, color: Colors.green[200])]),
+          BarChartGroupData(x: 4, barRods: [BarChartRodData(toY: 300, color: Colors.green[200])]),
         ],
       ),
     );

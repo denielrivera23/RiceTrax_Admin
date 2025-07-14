@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:rice_trax/Dashboard.dart';
+import 'package:rice_trax/Inventory.dart';
 import 'package:rice_trax/RiceStock.dart';
 
 void main() {
   runApp(RiceTraxApp());
 }
+
 
 class RiceTraxApp extends StatelessWidget {
   @override
