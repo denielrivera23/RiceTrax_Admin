@@ -57,7 +57,7 @@ class _DashboardState extends State<Dashboard> {
                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Inventory()));
               }),
               _buildDrawerItem(icon: Icons.local_shipping, title: 'Supplier', context: context, onTap: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Supplier()));
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SupplierPage()));
               }),
               _buildDrawerItem(icon: Icons.attach_money, title: 'Sales', context: context, onTap: () {
                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Sales()));
